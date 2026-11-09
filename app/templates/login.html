@@ -8,10 +8,14 @@
   <section class="login-card" aria-labelledby="login-title">
     <div class="card-glint" aria-hidden="true"></div>
     <div class="login-emblem" aria-hidden="true">
-      <svg viewBox="0 0 48 48"><path d="M8 40V7m2 2h27v19H10"/><path d="M10 9h9v9h9V9h9v9h-9v10h-9V18h-9z"/></svg>
+      <svg class="checkered-flag" viewBox="0 0 48 48">
+        <path d="M10 42V6" />
+        <path d="M13 9c6-4 11 3 17 0s10 2 14 0v22c-5 3-10-4-16 0s-10-4-15 0z" fill="rgba(220,236,255,.12)" />
+        <path d="M13 9h6v6h-6zm12 0h6v6h-6zm12 0h6v6h-6zM19 15h6v6h-6zm12 0h6v6h-6zM13 21h6v6h-6zm12 0h6v6h-6zm12 0h6v6h-6zM19 27h6v4h-6zm12 0h6v4h-6z" fill="currentColor" />
+      </svg>
     </div>
     <h1 id="login-title">Iniciar <span>sesión</span></h1>
-    <p class="login-subtitle">Bienvenido de vuelta, piloto.</p>
+    <p class="login-subtitle">Bienvenido de vuelta, piloto.<svg class="subtitle-flag" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M10 42V6"/><path d="M13 9c6-4 11 3 17 0s10 2 14 0v22c-5 3-10-4-16 0s-10-4-15 0z" fill="rgba(220,236,255,.12)"/><path d="M13 9h6v6h-6zm12 0h6v6h-6zm12 0h6v6h-6zM19 15h6v6h-6zm12 0h6v6h-6zM13 21h6v6h-6zm12 0h6v6h-6zm12 0h6v6h-6zM19 27h6v4h-6zm12 0h6v4h-6z" fill="currentColor"/></svg></p>
 
     <form class="auth-form login-form" method="post">
       <label class="sr-only" for="email">Correo electrónico</label>
