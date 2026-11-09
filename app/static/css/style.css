@@ -401,9 +401,9 @@ a { color: inherit; }
   min-height: 100svh;
   color: #f4f8ff;
   background:
-    linear-gradient(180deg, rgba(3, 11, 27, .42), rgba(4, 17, 39, .25) 48%, rgba(3, 11, 25, .48)),
-    radial-gradient(ellipse at 50% 8%, rgba(18, 106, 255, .24), transparent 50%),
-    url("/static/formula.jpeg") center 70% / cover no-repeat,
+    linear-gradient(180deg, rgba(3, 11, 27, .16), rgba(4, 17, 39, .06) 48%, rgba(3, 11, 25, .22)),
+    radial-gradient(ellipse at 50% 8%, rgba(18, 106, 255, .14), transparent 50%),
+    url("/static/image.png") center 70% / cover no-repeat,
     #06162d;
   font-family: "Manrope", sans-serif;
 }
@@ -484,14 +484,17 @@ a { color: inherit; }
   border: 1px solid rgba(183, 219, 255, .48);
   border-radius: 27px;
   background:
-    linear-gradient(135deg, rgba(26, 79, 137, .2), transparent 42%, rgba(199, 26, 56, .11)),
-    rgba(5, 22, 49, .36);
+    linear-gradient(135deg, rgba(34, 123, 230, .16), transparent 42%, rgba(232, 34, 65, .1)),
+    rgba(8, 28, 62, .14);
   box-shadow:
     0 22px 75px rgba(0, 3, 15, .45),
-    0 0 24px rgba(28, 135, 255, .22),
-    inset 0 1px 0 rgba(255, 255, 255, .2);
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
+    0 0 0 1px rgba(89, 190, 255, .34),
+    0 0 18px 2px rgba(28, 135, 255, .54),
+    0 0 34px 5px rgba(255, 35, 93, .26),
+    0 22px 75px rgba(0, 3, 15, .34),
+    inset 0 1px 0 rgba(255, 255, 255, .4);
+  backdrop-filter: blur(8px) saturate(185%);
+  -webkit-backdrop-filter: blur(8px) saturate(185%);
   text-align: center;
   animation: card-arrive .82s .08s both;
 }
@@ -500,10 +503,11 @@ a { color: inherit; }
   z-index: 0;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(118deg, rgba(44, 156, 255, .75), transparent 24%, transparent 76%, rgba(255, 45, 80, .62));
+  background: linear-gradient(125deg, #55c5ff 0%, rgba(97, 197, 255, .55) 15%, transparent 33%, transparent 65%, rgba(255, 78, 129, .58) 84%, #ff4d8c 100%);
   content: "";
-  opacity: .5;
-  padding: 1px;
+  opacity: .95;
+  padding: 1.5px;
+  filter: drop-shadow(0 0 5px rgba(43, 167, 255, .78)) drop-shadow(0 0 7px rgba(255, 47, 105, .52));
   pointer-events: none;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -532,7 +536,7 @@ a { color: inherit; }
   left: 0;
   width: 52%;
   height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(219, 239, 255, .08), transparent);
+  background: linear-gradient(90deg, transparent, rgba(219, 239, 255, .18), transparent);
   pointer-events: none;
   transform: translate3d(-180%, 0, 0) rotate(20deg);
   will-change: transform;
@@ -575,10 +579,12 @@ a { color: inherit; }
   align-items: center;
   gap: 13px;
   padding: 0 15px;
-  border: 1px solid rgba(204, 226, 255, .4);
+  border: 1px solid rgba(214, 235, 255, .58);
   border-radius: 15px;
-  background: linear-gradient(110deg, rgba(208, 229, 255, .09), rgba(123, 164, 221, .04));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.09);
+  background: linear-gradient(110deg, rgba(208, 229, 255, .12), rgba(123, 164, 221, .045));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 14px rgba(66, 157, 255, .12);
+  backdrop-filter: blur(6px) saturate(180%);
+  -webkit-backdrop-filter: blur(6px) saturate(180%);
   transition: border-color .22s, background .22s, box-shadow .22s, transform .22s;
 }
 .login-form .glass-input:focus-within {
@@ -700,8 +706,8 @@ a { color: inherit; }
 .welcome-page {
   min-height: 100vh;
   background:
-    linear-gradient(115deg, rgba(3, 13, 31, .88), rgba(4, 21, 46, .7) 55%, rgba(4, 12, 27, .76)),
-    url("/static/formula.jpeg") center 72% / cover fixed no-repeat,
+    linear-gradient(115deg, rgba(3, 13, 31, .42), rgba(4, 21, 46, .2) 55%, rgba(4, 12, 27, .38)),
+    url("/static/image.png") center 72% / cover fixed no-repeat,
     #06162d;
   color: #f4f8ff;
   font-family: "Manrope", sans-serif;
@@ -721,11 +727,11 @@ a { color: inherit; }
 .welcome-page .status-dot { background: #ff304a; box-shadow: 0 0 0 3px rgba(255, 48, 74, .16); }
 .welcome-page .welcome-layout {
   animation: card-arrive .82s .08s both;
-  border-color: rgba(178, 214, 255, .31);
-  background: rgba(5, 22, 48, .57);
-  box-shadow: 0 22px 75px rgba(0, 4, 17, .42), 0 0 28px rgba(29, 130, 255, .15), inset 0 1px 0 rgba(255,255,255,.12);
-  backdrop-filter: blur(19px) saturate(130%);
-  -webkit-backdrop-filter: blur(19px) saturate(130%);
+  border-color: rgba(178, 214, 255, .48);
+  background: rgba(5, 22, 48, .28);
+  box-shadow: 0 22px 75px rgba(0, 4, 17, .3), 0 0 20px 2px rgba(29, 130, 255, .32), 0 0 34px 4px rgba(255, 35, 93, .18), inset 0 1px 0 rgba(255,255,255,.27);
+  backdrop-filter: blur(9px) saturate(165%);
+  -webkit-backdrop-filter: blur(9px) saturate(165%);
 }
 .welcome-page .welcome-main { color: #f4f8ff; }
 .welcome-page .welcome-main > .eyebrow { color: #bad8ff; }
@@ -810,8 +816,8 @@ a { color: inherit; }
   }
   .login-screen {
     justify-content: center;
-    gap: 17px;
-    padding: max(24px, env(safe-area-inset-top)) 18px max(20px, env(safe-area-inset-bottom));
+    gap: 12px;
+    padding: max(18px, env(safe-area-inset-top)) 18px max(64px, env(safe-area-inset-bottom));
   }
   .racing-header { width: min(440px, 100%); }
   .racing-mark { font-size: 34px; }
@@ -819,28 +825,34 @@ a { color: inherit; }
   .racing-title p { font-size: 9px; letter-spacing: 2.5px; }
   .racing-title > span { width: 20px; }
   .login-card { width: min(480px, 100%); padding: 23px clamp(21px, 7vw, 38px) 20px; border-radius: 24px; }
-  .login-subtitle { margin-bottom: 17px; }
-  .login-form { gap: 11px; }
-  .login-form .glass-input { min-height: 55px; }
-  .login-form .glass-input input { height: 53px; font-size: 16px; }
+  .login-card { padding: 20px clamp(21px, 7vw, 38px) 17px; }
+  .login-emblem { width: 37px; height: 37px; margin-bottom: 5px; }
+  .login-emblem svg { width: 35px; }
+  .login-subtitle { margin: 6px 0 13px; }
+  .login-form { gap: 9px; }
+  .login-form .glass-input { min-height: 51px; border-radius: 14px; }
+  .login-form .glass-input input { height: 49px; font-size: 16px; }
   .login-form .password-toggle { height: 46px; }
-  .login-submit { height: 54px; }
+  .login-submit { height: 50px; }
+  .login-divider { margin-top: 12px; }
+  .login-switch { margin-top: 10px; }
+  .login-caption { font-size: 8px; }
   .welcome-page .welcome-layout { width: min(90%, 520px); margin-top: 24px; grid-template-columns: 1fr; }
   .welcome-page .welcome-main { min-height: 430px; }
   .welcome-page .welcome-side { min-height: 330px; border-top: 1px solid rgba(182, 216, 255, .15); border-left: 0; }
   .welcome-page .site-footer { color: rgba(218, 234, 255, .7); }
 }
 @media (max-width: 420px) {
-  .login-screen { gap: 17px; padding-right: 14px; padding-left: 14px; }
+  .login-screen { gap: 10px; padding-right: 14px; padding-left: 14px; }
   .racing-title p { font-size: 8px; letter-spacing: 2px; }
   .header-race-badge { gap: 3px; }
   .header-race-badge svg { width: 21px; height: 21px; }
   .header-race-badge span { font-size: 7px; letter-spacing: 1px; }
-  .login-card { padding: 24px 20px 20px; border-radius: 22px; }
-  .login-emblem { width: 38px; height: 38px; }
-  .login-emblem svg { width: 35px; }
+  .login-card { padding: 18px 18px 15px; border-radius: 22px; }
+  .login-emblem { width: 34px; height: 34px; margin-bottom: 4px; }
+  .login-emblem svg { width: 32px; }
   .login-card h1 { font-size: 30px; }
-  .login-subtitle { margin-top: 7px; margin-bottom: 19px; font-size: 13px; }
+  .login-subtitle { margin-top: 5px; margin-bottom: 11px; font-size: 13px; }
   .login-options { font-size: 10px; }
   .remember-option { gap: 7px; }
   .login-switch { font-size: 11px; }
@@ -870,15 +882,20 @@ a { color: inherit; }
 .register-form { margin-top: 20px; }
 .register-form .password-field input { padding-right: 36px; }
 @media (max-width: 760px) {
-  .register-card { padding-top: 20px; padding-bottom: 18px; }
-  .register-card .login-subtitle { margin-bottom: 13px; }
-  .register-form { margin-top: 14px; gap: 10px; }
+  .register-card { padding-top: 16px; padding-bottom: 14px; }
+  .register-card .login-subtitle { margin: 5px 0 9px; }
+  .register-card .login-emblem { margin-bottom: 3px; }
+  .register-form { margin-top: 9px; gap: 8px; }
+  .register-card .login-form .glass-input { min-height: 48px; }
+  .register-card .login-form .glass-input input { height: 46px; }
+  .register-card .login-divider { margin-top: 9px; }
+  .register-card .login-switch { margin-top: 8px; }
 }
 @media (max-width: 420px) {
-  .register-card { padding: 21px 17px 18px; }
+  .register-card { padding: 16px 15px 13px; }
   .register-card .login-subtitle { font-size: 12px; }
-  .register-card .login-emblem { width: 36px; height: 36px; }
-  .register-card .login-emblem svg { width: 34px; }
+  .register-card .login-emblem { width: 32px; height: 32px; }
+  .register-card .login-emblem svg { width: 30px; }
 }
 @media (hover: none) and (pointer: coarse) {
   .card-glint { animation-duration: 12s; }
