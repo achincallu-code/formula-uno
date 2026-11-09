@@ -828,12 +828,13 @@ a { color: inherit; }
   }
   .racing-header {
     display: grid;
+    grid-template-columns: 1fr;
     width: min(440px, 100%);
     justify-items: center;
     gap: 6px;
     margin-bottom: var(--mobile-header-gap);
   }
-  .racing-mark { font-size: 42px; }
+  .racing-mark { font-size: clamp(58px, 12vw, 78px); }
   .racing-title { justify-content: center; gap: 9px; }
   .racing-title p { font-size: 9px; letter-spacing: 2.5px; }
   .racing-title > span { width: 20px; }
@@ -884,8 +885,7 @@ a { color: inherit; }
     padding-top: max(10px, env(safe-area-inset-top));
     padding-bottom: max(18px, env(safe-area-inset-bottom));
   }
-  .racing-header { display: flex; margin-bottom: 0; }
-  .racing-mark { font-size: 34px; }
+  .racing-header { display: grid; gap: 4px; margin-bottom: 0; }
 }
 @media (max-height: 740px) and (min-width: 761px) {
   .login-screen { gap: 14px; padding-top: 18px; padding-bottom: 16px; }
