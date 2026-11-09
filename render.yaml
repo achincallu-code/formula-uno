@@ -3,8 +3,8 @@ services:
     name: grupo-306
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn run:app
-    healthCheckPath: /
+    startCommand: gunicorn --bind 0.0.0.0:$PORT run:app
+    healthCheckPath: /iniciar-sesion
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.8

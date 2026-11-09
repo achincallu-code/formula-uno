@@ -1,29 +1,35 @@
 {% extends "base.html" %}
 {% block title %}Hola, {{ student.name }}{% endblock %}
+{% block body_class %}welcome-page{% endblock %}
 {% block content %}
 <section class="welcome-layout">
   <div class="welcome-main">
-    <span class="eyebrow"><span class="status-dot"></span> TU ESPACIO · GRUPO 306</span>
+    <span class="eyebrow welcome-eyebrow"><span class="status-dot"></span> TU ESPACIO · GRUPO 306 <span class="eyebrow-flag" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 22V3m1 1h14v11H6"/><path d="M6 4h5v5h5V4h3v5h-3v5h-5V9H6z"/></svg></span></span>
     <div class="welcome-copy">
-      <p class="welcome-overline">QUÉ BUENO QUE LLEGASTE</p>
+      <p class="welcome-overline">PREPARADO PARA LA SIGUIENTE VUELTA</p>
       <h1>Hola, <span>{{ student.name.split()[0] }}</span><span class="wave">.</span></h1>
-      <p class="welcome-description">Este también es tu lugar. Aquí empiezan nuevas ideas, buenos momentos y todo lo que estás por lograr.</p>
+      <p class="welcome-description">Tu espacio está listo. Ajusta el casco, toma la salida y sigue avanzando hacia todo lo que puedes lograr.</p>
       <div class="welcome-actions">
-        <div class="welcome-chip"><span class="chip-dot"></span> Cuenta lista</div>
-        <div class="welcome-chip">✳ &nbsp;Grupo 306</div>
+        <div class="welcome-chip"><span class="chip-dot"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21h14M7 21l1-8h8l1 8M9 13l1-4h4l1 4M10 9V6h4v3"/></svg> PILOTO CONECTADO</div>
+        <div class="welcome-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21V3m1 2h12v10H8"/><path d="M8 5h4v5h4V5h4v5h-4v5h-4v-5H8z"/></svg> GRUPO 306</div>
       </div>
     </div>
-    <div class="welcome-bottom"><span>UN DÍA A LA VEZ.</span><span>TODO COMIENZA CON UN PASO <b>↗</b></span></div>
+    <div class="welcome-bottom"><span>UNA VUELTA A LA VEZ.</span><span>VAMOS POR MÁS <b>↗</b></span></div>
   </div>
   <aside class="welcome-side">
+    <svg class="track-map" viewBox="0 0 360 420" fill="none" aria-hidden="true">
+      <path class="track-map-shadow" d="M92 344c-44-11-55-41-34-72l39-57c15-22 8-44-17-55L48 144c-26-13-24-42 5-57l45-24c22-12 51-9 68 7l34 34c17 16 42 17 61 2l16-13c27-22 67-8 66 23l-1 35c-1 19-16 34-37 38l-30 6c-25 5-37 28-28 50l20 48c10 25-8 53-38 57l-77 11c-20 3-42-3-60-17Z" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="track-map-line" d="M92 344c-44-11-55-41-34-72l39-57c15-22 8-44-17-55L48 144c-26-13-24-42 5-57l45-24c22-12 51-9 68 7l34 34c17 16 42 17 61 2l16-13c27-22 67-8 66 23l-1 35c-1 19-16 34-37 38l-30 6c-25 5-37 28-28 50l20 48c10 25-8 53-38 57l-77 11c-20 3-42-3-60-17Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle class="track-map-start" cx="92" cy="344" r="7"/>
+    </svg>
     <div class="side-orbit orbit-outer"></div>
     <div class="side-orbit orbit-inner"></div>
     <div class="side-center">
-      <span class="center-spark">✳</span>
+      <span class="center-spark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 40V7m2 2h27v19H10"/><path d="M10 9h9v9h9V9h9v9h-9v10h-9V18h-9z"/></svg></span>
       <strong>306</strong>
-      <span>CRECEMOS JUNTOS</span>
+      <span>DRIVE YOUR PASSION</span>
     </div>
-    <div class="side-note"><span>01</span><p>Tu camino<br>apenas comienza.</p></div>
+    <div class="side-note"><span>01</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 22V3m1 1h14v11H6"/><path d="M6 4h5v5h5V4h3v5h-3v5h-5V9H6z"/></svg><p>La próxima vuelta<br>es tuya.</p></div>
     <span class="side-plus plus-one">+</span><span class="side-plus plus-two">+</span>
   </aside>
 </section>

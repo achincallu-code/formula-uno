@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from flask import Flask
@@ -8,7 +9,17 @@ def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.update(
         SECRET_KEY=os.environ.get("SECRET_KEY", "dev-key-change-this-before-deploying"),
+        PERMANENT_SESSION_LIFETIME=timedelta(days=30),
         DATABASE_URL=os.environ.get("DATABASE_URL"),
+        SMTP_HOST=os.environ.get("SMTP_HOST"),
+        SMTP_PORT=int(os.environ.get("SMTP_PORT", "587")),
+        SMTP_USERNAME=os.environ.get("SMTP_USERNAME"),
+        SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD"),
+        MAIL_FROM=os.environ.get("MAIL_FROM"),
+        PUBLIC_BASE_URL=(
+            os.environ.get("PUBLIC_BASE_URL")
+            or os.environ.get("RENDER_EXTERNAL_URL")
+        ),
         DATABASE=os.environ.get(
             "DATABASE_PATH",
             str(Path(app.instance_path) / "grupo306.sqlite"),

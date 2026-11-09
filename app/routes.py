@@ -1,4 +1,10 @@
+import hashlib
+import secrets
 import sqlite3
+import smtplib
+import ssl
+import time
+from email.message import EmailMessage
 from functools import wraps
 
 import psycopg
@@ -70,6 +76,15 @@ def init_db():
             )
             """
         )
+    database.execute(
+        """
+        CREATE TABLE IF NOT EXISTS password_resets (
+            student_id BIGINT NOT NULL UNIQUE,
+            token_hash TEXT NOT NULL UNIQUE,
+            expires_at BIGINT NOT NULL
+        )
+        """
+    )
     database.commit()
 
 
@@ -108,9 +123,129 @@ def login():
         else:
             session.clear()
             session["student_id"] = student["id"]
+            session.permanent = request.form.get("remember") == "on"
             return redirect(url_for("main.welcome"))
 
     return render_template("login.html")
+
+
+def send_password_reset_email(recipient, reset_url):
+    message = EmailMessage()
+    message["Subject"] = "Restablece tu contraseña de Aula 306"
+    message["From"] = current_app.config["MAIL_FROM"]
+    message["To"] = recipient
+    message.set_content(
+        "Recibimos una solicitud para restablecer tu contraseña.\n\n"
+        f"Abre este enlace dentro de una hora:\n{reset_url}\n\n"
+        "Si no solicitaste este cambio, puedes ignorar este mensaje."
+    )
+
+    host = current_app.config["SMTP_HOST"]
+    port = current_app.config["SMTP_PORT"]
+    username = current_app.config["SMTP_USERNAME"]
+    password = current_app.config["SMTP_PASSWORD"]
+    timeout = 15
+    if port == 465:
+        with smtplib.SMTP_SSL(host, port, timeout=timeout, context=ssl.create_default_context()) as server:
+            if username and password:
+                server.login(username, password)
+            server.send_message(message)
+    else:
+        with smtplib.SMTP(host, port, timeout=timeout) as server:
+            server.starttls(context=ssl.create_default_context())
+            if username and password:
+                server.login(username, password)
+            server.send_message(message)
+
+
+@bp.route("/recuperar-contrasena", methods=("GET", "POST"))
+def forgot_password():
+    if request.method == "POST":
+        email = request.form.get("email", "").strip().lower()
+        if not email or len(email) > 254 or "@" not in email:
+            flash("Escribe un correo electrónico válido.", "error")
+            return render_template("forgot_password.html")
+
+        if not all(
+            (
+                current_app.config["SMTP_HOST"],
+                current_app.config["MAIL_FROM"],
+                current_app.config["PUBLIC_BASE_URL"],
+            )
+        ):
+            current_app.logger.error("Password reset email is not configured.")
+            flash("La recuperación por correo aún no está configurada.", "error")
+            return render_template("forgot_password.html")
+
+        student = execute(
+            "SELECT id, email FROM students WHERE email = ?",
+            (email,),
+        ).fetchone()
+        if student is not None:
+            raw_token = secrets.token_urlsafe(32)
+            token_hash = hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
+            expires_at = int(time.time()) + 3600
+            execute("DELETE FROM password_resets WHERE student_id = ?", (student["id"],))
+            execute(
+                "INSERT INTO password_resets (student_id, token_hash, expires_at) VALUES (?, ?, ?)",
+                (student["id"], token_hash, expires_at),
+            )
+            get_db().commit()
+            reset_path = url_for("main.reset_password", token=raw_token)
+            reset_url = f'{current_app.config["PUBLIC_BASE_URL"].rstrip("/")}{reset_path}'
+            try:
+                send_password_reset_email(student["email"], reset_url)
+            except (OSError, smtplib.SMTPException):
+                current_app.logger.exception("Unable to send password reset email.")
+                execute("DELETE FROM password_resets WHERE student_id = ?", (student["id"],))
+                get_db().commit()
+                flash("No se pudo enviar el correo. Inténtalo de nuevo más tarde.", "error")
+                return render_template("forgot_password.html")
+
+        flash("Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.", "success")
+        return redirect(url_for("main.forgot_password"))
+
+    return render_template("forgot_password.html")
+
+
+@bp.route("/restablecer-contrasena/<token>", methods=("GET", "POST"))
+def reset_password(token):
+    token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+    reset = execute(
+        "SELECT student_id FROM password_resets WHERE token_hash = ? AND expires_at > ?",
+        (token_hash, int(time.time())),
+    ).fetchone()
+    if reset is None:
+        flash("El enlace no es válido o ya venció. Solicita uno nuevo.", "error")
+        return redirect(url_for("main.forgot_password"))
+
+    if request.method == "POST":
+        password = request.form.get("password", "")
+        confirmation = request.form.get("confirmation", "")
+        if len(password) < 8:
+            flash("Tu contraseña debe tener al menos 8 caracteres.", "error")
+        elif password != confirmation:
+            flash("Las contraseñas no coinciden.", "error")
+        else:
+            consumed = execute(
+                """
+                DELETE FROM password_resets
+                WHERE student_id = ? AND token_hash = ? AND expires_at > ?
+                """,
+                (reset["student_id"], token_hash, int(time.time())),
+            )
+            if consumed.rowcount != 1:
+                flash("El enlace no es válido o ya venció. Solicita uno nuevo.", "error")
+                return redirect(url_for("main.forgot_password"))
+            execute(
+                "UPDATE students SET password_hash = ? WHERE id = ?",
+                (generate_password_hash(password), reset["student_id"]),
+            )
+            get_db().commit()
+            flash("Tu contraseña se actualizó. Ya puedes iniciar sesión.", "success")
+            return redirect(url_for("main.login"))
+
+    return render_template("reset_password.html")
 
 
 @bp.route("/crear-cuenta", methods=("GET", "POST"))
