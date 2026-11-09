@@ -31,7 +31,7 @@
       {% if messages %}
         <div class="flash-stack" role="status">
           {% for category, message in messages %}
-            <div class="flash flash-{{ category }}">{{ message }}</div>
+            <div class="flash flash-{{ category }}" role="{{ 'alert' if category == 'error' else 'status' }}">{{ message }}</div>
           {% endfor %}
         </div>
       {% endif %}
@@ -43,5 +43,6 @@
     <span>Hecho para aprender juntos.</span>
     <span>GRUPO 306 <span class="footer-dot">·</span> CICLO ESCOLAR</span>
   </footer>
+  <script src="{{ url_for('static', filename='js/password-toggle.js') }}" defer></script>
 </body>
 </html>

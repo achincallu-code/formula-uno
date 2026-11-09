@@ -189,6 +189,28 @@ a { color: inherit; }
 }
 .auth-form input::placeholder { color: #a4a59e; }
 .auth-form input:focus { border-color: #ca7d9d; box-shadow: 0 0 0 3px rgba(179,79,120,.10); }
+.password-field { position: relative; margin-bottom: 19px; }
+.password-field input { margin-bottom: 0; padding-right: 48px; }
+.password-toggle {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  display: grid;
+  width: 40px;
+  height: 45px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #a66a85;
+  cursor: pointer;
+}
+.password-toggle:hover { color: var(--green-dark); }
+.password-toggle:focus-visible { outline: 2px solid #ca7d9d; outline-offset: -4px; }
+.password-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+.password-toggle .eye-closed { display: none; }
+.password-toggle[aria-pressed="true"] .eye-open { display: none; }
+.password-toggle[aria-pressed="true"] .eye-closed { display: block; }
 .label-row { display: flex; justify-content: space-between; align-items: baseline; }
 .input-hint { color: #a0a199; font-size: 9px; }
 .button {
@@ -224,6 +246,8 @@ a { color: inherit; }
 .register-panel { padding-top: 38px; padding-bottom: 38px; }
 .register-panel .auth-heading > p { margin-bottom: 22px; }
 .register-panel .auth-form input { margin-bottom: 14px; }
+.register-panel .auth-form .password-field input { margin-bottom: 0; }
+.register-panel .password-field { margin-bottom: 14px; }
 .register-panel .auth-form .button { margin-top: 5px; }
 .register-panel .auth-switch { margin-top: 17px; }
 .register-panel .form-footnote { margin-top: 25px; }
@@ -360,6 +384,7 @@ a { color: inherit; }
   .auth-heading > p { line-height: 1.6; }
   .input-hint { font-size: 8px; }
   .auth-form input { min-height: 46px; font-size: 16px; }
+  .password-toggle { height: 46px; }
   .welcome-main { min-height: 410px; padding: 26px 22px 22px; }
   .welcome-copy h1 { font-size: 54px; }
   .welcome-description { font-size: 12px; }
