@@ -5,14 +5,10 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn run:app
     healthCheckPath: /
-    disk:
-      name: grupo-306-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.8
       - key: SECRET_KEY
         generateValue: true
-      - key: DATABASE_PATH
-        value: /var/data/grupo306.sqlite
+      - key: DATABASE_URL
+        sync: false
