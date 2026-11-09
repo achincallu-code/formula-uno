@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-story">
+    <div class="story-topline"><span class="eyebrow-line"></span> TU LUGAR EN EL AULA</div>
+    <div class="story-copy">
+      <p class="story-kicker">Las grandes cosas<br>empiezan <em>aprendiendo.</em></p>
+      <p class="story-description">Un espacio para conectar, descubrir y llegar más lejos. Qué bueno que estás aquí.</p>
+    </div>
+    <div class="story-bottom">
+      <div class="avatar-stack" aria-hidden="true"><span>A</span><span>M</span><span>D</span><b>306</b></div>
+      <span>Una comunidad, muchas ideas.</span>
+    </div>
+    <span class="story-decoration decoration-one"></span>
+    <span class="story-decoration decoration-two"></span>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-heading">
+      <span class="eyebrow">QUÉ BUENO VERTE</span>
+      <h1>Tu siguiente paso<br>empieza <span>aquí.</span></h1>
+      <p>Inicia sesión para volver a tu espacio.</p>
+    </div>
+    <form class="auth-form" method="post">
+      <label for="email">Correo electrónico</label>
+      <input id="email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required value="{{ request.form.get('email', '') }}">
+
+      <div class="label-row">
+        <label for="password">Contraseña</label>
+        <span class="input-hint">Mínimo 8 caracteres</span>
+      </div>
+      <input id="password" name="password" type="password" placeholder="Tu contraseña" autocomplete="current-password" required>
+
+      <button class="button button-primary" type="submit">Entrar a mi espacio <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">¿Aún no tienes cuenta? <a href="{{ url_for('main.register') }}">Crear cuenta <span aria-hidden="true">↗</span></a></p>
+    <div class="form-footnote"><span class="lock-icon" aria-hidden="true">⌑</span> Tu espacio, solo para ti.</div>
+  </div>
+</section>
+{% endblock %}

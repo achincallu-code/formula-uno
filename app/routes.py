@@ -1,0 +1,142 @@
+import sqlite3
+from functools import wraps
+
+from flask import (
+    Blueprint,
+    current_app,
+    flash,
+    g,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
+from werkzeug.security import check_password_hash, generate_password_hash
+
+bp = Blueprint("main", __name__)
+
+
+def get_db():
+    if "db" not in g:
+        g.db = sqlite3.connect(current_app.config["DATABASE"])
+        g.db.row_factory = sqlite3.Row
+    return g.db
+
+
+def close_db(_error=None):
+    database = g.pop("db", None)
+    if database is not None:
+        database.close()
+
+
+def init_db():
+    database = get_db()
+    database.execute(
+        """
+        CREATE TABLE IF NOT EXISTS students (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """
+    )
+    database.commit()
+
+
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if "student_id" not in session:
+            return redirect(url_for("main.login"))
+        return view(**kwargs)
+
+    return wrapped_view
+
+
+@bp.route("/")
+def home():
+    if "student_id" in session:
+        return redirect(url_for("main.welcome"))
+    return redirect(url_for("main.login"))
+
+
+@bp.route("/iniciar-sesion", methods=("GET", "POST"))
+def login():
+    if "student_id" in session:
+        return redirect(url_for("main.welcome"))
+
+    if request.method == "POST":
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+        student = get_db().execute(
+            "SELECT id, name, email, password_hash FROM students WHERE email = ?",
+            (email,),
+        ).fetchone()
+
+        if student is None or not check_password_hash(student["password_hash"], password):
+            flash("El correo o la contraseña no son correctos.", "error")
+        else:
+            session.clear()
+            session["student_id"] = student["id"]
+            return redirect(url_for("main.welcome"))
+
+    return render_template("login.html")
+
+
+@bp.route("/crear-cuenta", methods=("GET", "POST"))
+def register():
+    if "student_id" in session:
+        return redirect(url_for("main.welcome"))
+
+    if request.method == "POST":
+        name = " ".join(request.form.get("name", "").split())
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+
+        if not name or len(name) > 80:
+            flash("Escribe tu nombre (máximo 80 caracteres).", "error")
+        elif not email or len(email) > 254 or "@" not in email:
+            flash("Escribe un correo electrónico válido.", "error")
+        elif len(password) < 8:
+            flash("Tu contraseña debe tener al menos 8 caracteres.", "error")
+        else:
+            try:
+                database = get_db()
+                cursor = database.execute(
+                    "INSERT INTO students (name, email, password_hash) VALUES (?, ?, ?)",
+                    (name, email, generate_password_hash(password)),
+                )
+                database.commit()
+            except sqlite3.IntegrityError:
+                flash("Ya existe una cuenta con ese correo. Prueba iniciar sesión.", "error")
+            else:
+                session.clear()
+                session["student_id"] = cursor.lastrowid
+                return redirect(url_for("main.welcome"))
+
+    return render_template("register.html")
+
+
+@bp.route("/bienvenida")
+@login_required
+def welcome():
+    student = get_db().execute(
+        "SELECT name, email FROM students WHERE id = ?",
+        (session["student_id"],),
+    ).fetchone()
+
+    if student is None:
+        session.clear()
+        return redirect(url_for("main.login"))
+
+    return render_template("welcome.html", student=student)
+
+
+@bp.route("/cerrar-sesion", methods=("POST",))
+def logout():
+    session.clear()
+    flash("Cerraste sesión. ¡Hasta pronto!", "success")
+    return redirect(url_for("main.login"))

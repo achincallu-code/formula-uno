@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Crear cuenta{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-story register-story">
+    <div class="story-topline"><span class="eyebrow-line"></span> EMPIEZA ALGO NUEVO</div>
+    <div class="story-copy">
+      <p class="story-kicker">Tu historia en el<br>306 <em>comienza hoy.</em></p>
+      <p class="story-description">Crea tu cuenta, conoce a tu comunidad y prepárate para todo lo que vas a lograr.</p>
+    </div>
+    <div class="story-bottom">
+      <div class="mini-stamp">306</div>
+      <span>Siempre hay algo nuevo por aprender.</span>
+    </div>
+    <span class="story-decoration decoration-one"></span>
+    <span class="story-decoration decoration-two"></span>
+  </div>
+
+  <div class="auth-panel register-panel">
+    <div class="auth-heading">
+      <span class="eyebrow">BIENVENIDO AL GRUPO</span>
+      <h1>Hagamos espacio<br>para <span>ti.</span></h1>
+      <p>Unos datos y ya formas parte del 306.</p>
+    </div>
+    <form class="auth-form" method="post">
+      <label for="name">¿Cómo te llamas?</label>
+      <input id="name" name="name" type="text" placeholder="Tu nombre completo" autocomplete="name" maxlength="80" required value="{{ request.form.get('name', '') }}">
+
+      <label for="email">Correo electrónico</label>
+      <input id="email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" maxlength="254" required value="{{ request.form.get('email', '') }}">
+
+      <div class="label-row">
+        <label for="password">Crea una contraseña</label>
+        <span class="input-hint">8 caracteres o más</span>
+      </div>
+      <input id="password" name="password" type="password" placeholder="Elige una contraseña segura" autocomplete="new-password" minlength="8" required>
+
+      <button class="button button-primary" type="submit">Crear mi cuenta <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">¿Ya tienes una cuenta? <a href="{{ url_for('main.login') }}">Inicia sesión <span aria-hidden="true">↗</span></a></p>
+    <div class="form-footnote"><span class="lock-icon" aria-hidden="true">⌑</span> Tu espacio, solo para ti.</div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Hola, {{ student.name }}{% endblock %}
+{% block content %}
+<section class="welcome-layout">
+  <div class="welcome-main">
+    <span class="eyebrow"><span class="status-dot"></span> TU ESPACIO · GRUPO 306</span>
+    <div class="welcome-copy">
+      <p class="welcome-overline">QUÉ BUENO QUE LLEGASTE</p>
+      <h1>Hola, <span>{{ student.name.split()[0] }}</span><span class="wave">.</span></h1>
+      <p class="welcome-description">Este también es tu lugar. Aquí empiezan nuevas ideas, buenos momentos y todo lo que estás por lograr.</p>
+      <div class="welcome-actions">
+        <div class="welcome-chip"><span class="chip-dot"></span> Cuenta lista</div>
+        <div class="welcome-chip">✳ &nbsp;Grupo 306</div>
+      </div>
+    </div>
+    <div class="welcome-bottom"><span>UN DÍA A LA VEZ.</span><span>TODO COMIENZA CON UN PASO <b>↗</b></span></div>
+  </div>
+  <aside class="welcome-side">
+    <div class="side-orbit orbit-outer"></div>
+    <div class="side-orbit orbit-inner"></div>
+    <div class="side-center">
+      <span class="center-spark">✳</span>
+      <strong>306</strong>
+      <span>CRECEMOS JUNTOS</span>
+    </div>
+    <div class="side-note"><span>01</span><p>Tu camino<br>apenas comienza.</p></div>
+    <span class="side-plus plus-one">+</span><span class="side-plus plus-two">+</span>
+  </aside>
+</section>
+{% endblock %}
